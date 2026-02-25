@@ -1,4 +1,242 @@
+definitions:
+  handler.CreateOpeningResponse:
+    properties:
+      data:
+        $ref: '#/definitions/schemas.OpeningResponse'
+      message:
+        type: string
+    type: object
+  handler.CreatedOpeningRequest:
+    properties:
+      company:
+        type: string
+      link:
+        type: string
+      location:
+        type: string
+      remote:
+        type: boolean
+      role:
+        type: string
+      salary:
+        type: integer
+    type: object
+  handler.DeleteOpeningResponse:
+    properties:
+      data:
+        $ref: '#/definitions/schemas.OpeningResponse'
+      message:
+        type: string
+    type: object
+  handler.ErrorResponse:
+    properties:
+      message:
+        type: string
+      status:
+        type: integer
+    type: object
+  handler.ListOpeningsResponse:
+    properties:
+      data:
+        items:
+          $ref: '#/definitions/schemas.OpeningResponse'
+        type: array
+      message:
+        type: string
+    type: object
+  handler.ShowOpeningResponse:
+    properties:
+      data:
+        $ref: '#/definitions/schemas.OpeningResponse'
+      message:
+        type: string
+    type: object
+  handler.UpdateOpeningRequest:
+    properties:
+      company:
+        type: string
+      link:
+        type: string
+      location:
+        type: string
+      remote:
+        type: boolean
+      role:
+        type: string
+      salary:
+        type: integer
+    type: object
+  schemas.OpeningResponse:
+    properties:
+      company:
+        type: string
+      createdAt:
+        type: string
+      deletedAt.omitempty:
+        type: string
+      id:
+        type: integer
+      link:
+        type: string
+      location:
+        type: string
+      remote:
+        type: boolean
+      role:
+        type: string
+      salary:
+        type: integer
+      updatedAt:
+        type: string
+    type: object
 info:
   contact: {}
-paths: {}
+paths:
+  /opening:
+    delete:
+      consumes:
+      - application/json
+      description: Delete an opening by its ID
+      parameters:
+      - description: Opening ID
+        in: query
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Successfully deleted opening
+          schema:
+            $ref: '#/definitions/handler.DeleteOpeningResponse'
+        "400":
+          description: Bad request
+          schema:
+            $ref: '#/definitions/handler.ErrorResponse'
+        "404":
+          description: Opening not found
+          schema:
+            $ref: '#/definitions/handler.ErrorResponse'
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/handler.ErrorResponse'
+      summary: Delete an opening
+      tags:
+      - Openings
+    get:
+      consumes:
+      - application/json
+      description: Show an opening by its ID
+      parameters:
+      - description: Opening ID
+        in: query
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Successfully retrieved opening
+          schema:
+            $ref: '#/definitions/handler.ShowOpeningResponse'
+        "400":
+          description: Bad request
+          schema:
+            $ref: '#/definitions/handler.ErrorResponse'
+        "404":
+          description: Opening not found
+          schema:
+            $ref: '#/definitions/handler.ErrorResponse'
+      summary: Show an opening
+      tags:
+      - Openings
+    post:
+      consumes:
+      - application/json
+      description: Create a new opening with the provided details
+      parameters:
+      - description: Opening details
+        in: body
+        name: opening
+        required: true
+        schema:
+          $ref: '#/definitions/handler.CreatedOpeningRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Successfully created opening
+          schema:
+            $ref: '#/definitions/handler.CreateOpeningResponse'
+        "400":
+          description: Bad request
+          schema:
+            $ref: '#/definitions/handler.ErrorResponse'
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/handler.ErrorResponse'
+      summary: Create a new opening
+      tags:
+      - Openings
+    put:
+      consumes:
+      - application/json
+      description: Update an opening by its ID with the provided details
+      parameters:
+      - description: Opening ID
+        in: query
+        name: id
+        required: true
+        type: string
+      - description: Updated opening details
+        in: body
+        name: opening
+        required: true
+        schema:
+          $ref: '#/definitions/handler.UpdateOpeningRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Successfully updated opening
+          schema:
+            $ref: '#/definitions/handler.ShowOpeningResponse'
+        "400":
+          description: Bad request
+          schema:
+            $ref: '#/definitions/handler.ErrorResponse'
+        "404":
+          description: Opening not found
+          schema:
+            $ref: '#/definitions/handler.ErrorResponse'
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/handler.ErrorResponse'
+      summary: Update an opening
+      tags:
+      - Openings
+  /openings:
+    get:
+      consumes:
+      - application/json
+      description: Retrieve a list of all openings
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Successfully retrieved list of openings
+          schema:
+            $ref: '#/definitions/handler.ListOpeningsResponse'
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/handler.ErrorResponse'
+      summary: List all openings
+      tags:
+      - Openings
 swagger: "2.0"
