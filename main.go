@@ -2,7 +2,7 @@ package main
 
 import (
 	"github.com/devlucas-java/api-opportunities/config"
-	r "github.com/devlucas-java/api-opportunities/router"
+	"github.com/devlucas-java/api-opportunities/router"
 )
 
 var (
@@ -20,5 +20,5 @@ func main() {
 	}
 
 	// start all over
-	r.Initalizer()
+	router.Initializer()
 }

@@ -10,10 +10,23 @@ var (
 )
 
 func Init() error {
+
+	var err error
+
+	db, err = InitializeSQLite()
+	if err != nil {
+		logger.Errorf("Error initializing SQLite: %v", err)
+		return err
+	}
+
 	return nil
 }
 
-func GetLogger(v string) *Logger {
-	logger = NewLogger(v)
+func GetSQLiteDB() *gorm.DB {
+	return db
+}
+
+func GetLogger(p string) *Logger {
+	logger = NewLogger(p)
 	return logger
 }
