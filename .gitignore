@@ -1,5 +1,16 @@
-.air.toml
-go.sum
-.idea/
-.env
+
+
+# Libraries and Ides
+*.air.toml
+*.idea/
+*.env
+
+# Binaries
+*.exe
+*.dll
+*.so
+*.dylib
+
+# Diretories
+/db
 tmp/
